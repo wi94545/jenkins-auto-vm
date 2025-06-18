@@ -1,5 +1,5 @@
 provider "google" {
-  project = "your-gcp-project-id"
+  project = "silver-impulse-462505-s4"
   region  = "asia-east1"
   zone    = "asia-east1-b"
 }
@@ -11,19 +11,21 @@ resource "google_compute_instance" "nginx_vm" {
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-11"
+      image = "centos-cloud/centos-stream-9"
+      size  = 100
     }
   }
 
   network_interface {
-    network = "your-vpc-name"
+    network = "joe-vpc-1"
     access_config {}
   }
 
   metadata_startup_script = <<-EOT
-    #!/bin/bash
-    apt-get update
-    apt-get install -y nginx
-    systemctl start nginx
-  EOT
+  #!/bin/bash
+  dnf update -y
+  dnf install -y nginx
+  systemctl enable nginx
+  systemctl start nginx
+EOT
 }

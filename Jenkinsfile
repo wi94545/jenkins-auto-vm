@@ -20,14 +20,26 @@ pipeline {
             }
         }
 
+        stage('Terraform Plan') {
+            steps {
+                dir('terraform') {
+                    script {
+                        def planStatus = sh(script: 'terraform plan', returnStatus: true)
+                        if (planStatus != 0) {
+                            error("Terraform plan failed, aborting pipeline.")
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Terraform Apply') {
             steps {
                 dir('terraform') {
-                    sh '''
-                    terraform apply -auto-approve
-                    '''
+                    sh 'terraform apply -auto-approve'
                 }
             }
         }
     }
 }
+
