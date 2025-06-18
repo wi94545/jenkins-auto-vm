@@ -7,11 +7,13 @@
 ---
 ## 專案結構
 
+``` 
 jenkins-auto-vm/
 ├── terraform/
 │ └── main.tf
 ├── Jenkinsfile
 └── README.md
+``` 
 
 ---
 ## 前置準備
