@@ -16,6 +16,5 @@ resource "google_compute_instance" "vm" {
     access_config {}
   }
 
-  metadata_startup_script = var.startup_script
+  metadata_startup_script = file(var.startup_script)
 }
-

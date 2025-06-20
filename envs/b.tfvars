@@ -1,8 +1,0 @@
-project        = "silver-impulse-462505-s4"
-region         = "asia-east1"
-zone           = "asia-east1-c"
-vm_name        = "env-b-vm"
-machine_type   = "e2-medium"
-network        = "joe-vpc-1"
-subnetwork     = "joe-test2"
-startup_script = "modules/compute_instance/startup-scripts/a.sh"
