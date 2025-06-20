@@ -37,4 +37,3 @@ systemctl enable nginx
 systemctl start nginx
 EOT
 }
-##test1
