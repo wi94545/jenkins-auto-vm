@@ -1,4 +1,4 @@
-variable "google_credentials_base64" {
+variable "google_credentials" {
   description = "Base64 encoded GCP service account JSON"
   type        = string
   sensitive   = true
@@ -8,7 +8,7 @@ provider "google" {
   project = "silver-impulse-462505-s4"
   region  = "asia-east1"
   zone    = "asia-east1-b"
-  credentials = jsondecode(base64decode(var.google_credentials_base64))
+  credentials = jsondecode(base64decode(var.google_credentials))
 }
 
 resource "google_compute_instance" "nginx_vm" {
