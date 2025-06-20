@@ -1,5 +1,5 @@
 variable "google_credentials" {
-  description = "Base64 encoded GCP service account JSON"
+  description = "Base64 encoded GCP service-account JSON"
   type        = string
   sensitive   = true
 }
