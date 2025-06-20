@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Choose Terraform action')
+    }
+
     environment {
         GOOGLE_CREDENTIALS = credentials('gcp-service-account-json')
     }
@@ -20,26 +24,38 @@ pipeline {
             }
         }
 
-        stage('Terraform Plan') {
+        stage('Terraform Plan or Destroy Plan') {
             steps {
                 dir('terraform') {
                     script {
-                        def planStatus = sh(script: 'terraform plan', returnStatus: true)
-                        if (planStatus != 0) {
-                            error("Terraform plan failed, aborting pipeline.")
+                        if (params.ACTION == 'apply') {
+                            def planStatus = sh(script: 'terraform plan', returnStatus: true)
+                            if (planStatus != 0) {
+                                error("Terraform plan failed, aborting pipeline.")
+                            }
+                        } else if (params.ACTION == 'destroy') {
+                            def planStatus = sh(script: 'terraform plan -destroy', returnStatus: true)
+                            if (planStatus != 0) {
+                                error("Terraform destroy plan failed, aborting pipeline.")
+                            }
                         }
                     }
                 }
             }
         }
 
-        stage('Terraform Apply') {
+        stage('Terraform Apply or Destroy') {
             steps {
                 dir('terraform') {
-                    sh 'terraform apply -auto-approve'
+                    script {
+                        if (params.ACTION == 'apply') {
+                            sh 'terraform apply -auto-approve'
+                        } else if (params.ACTION == 'destroy') {
+                            sh 'terraform destroy -auto-approve'
+                        }
+                    }
                 }
             }
         }
     }
 }
-
