@@ -21,3 +21,4 @@ module "nginx_vm" {
   network        = "joe-vpc-1"
   subnetwork     = "joe-test2"
   startup_script = "${path.module}/../../modules/compute_instance/startup-scripts/b.sh"
+}
