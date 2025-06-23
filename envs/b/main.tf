@@ -16,8 +16,8 @@ module "nginx_vm" {
   name           = "jenkins-nginx-vm-b"
   machine_type   = "e2-medium"
   zone           = "asia-east1-c"
+  image          = "centos-cloud/centos-stream-9"
+  disk_size      = 100
   network        = "joe-vpc-1"
   subnetwork     = "joe-test2"
   startup_script = "${path.module}/../../modules/compute_instance/startup-scripts/b.sh"
-}
-
