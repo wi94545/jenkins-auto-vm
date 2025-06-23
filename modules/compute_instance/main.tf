@@ -1,4 +1,4 @@
-resource "google_compute_instance" "vm" {
+resource "google_compute_instance" "nginx_vm" {
   name         = var.name
   machine_type = var.machine_type
   zone         = var.zone

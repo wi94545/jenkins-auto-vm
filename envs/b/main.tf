@@ -1,18 +1,23 @@
+variable "google_credentials" {
+  description = "Base64 encoded GCP service account JSON"
+  type        = string
+  sensitive   = true
+}
+
 provider "google" {
-  project     = var.project
-  region      = var.region
-  zone        = var.zone
+  project     = "silver-impulse-462505-s4"
+  region      = "asia-east1"
+  zone        = "asia-east1-c"
   credentials = base64decode(var.google_credentials)
 }
 
-module "vm" {
+module "nginx_vm" {
   source         = "../../modules/compute_instance"
-  name           = var.vm_name
-  machine_type   = var.machine_type
-  zone           = var.zone
-  image          = var.image
-  disk_size      = var.disk_size
-  network        = var.network
-  subnetwork     = var.subnetwork
-  startup_script = var.startup_script
+  name           = "jenkins-nginx-vm-b"
+  machine_type   = "e2-medium"
+  zone           = "asia-east1-c"
+  network        = "joe-vpc-1"
+  subnetwork     = "joe-test2"
+  startup_script = "${path.module}/../../modules/compute_instance/startup-scripts/b.sh"
 }
+
